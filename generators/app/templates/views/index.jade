@@ -1,0 +1,70 @@
+doctype html
+
+html
+
+  head
+  
+    meta(http-equiv='Content-Type' content='text/html' charset='utf-8')
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/babylonjs/babylon.js')
+    script(type='text/javascript').
+    
+        function createSample(canvas){
+              
+            var _this = this;
+
+            // Engine
+            this._engine = new BABYLON.Engine(canvas);
+            
+            // Scene
+            this._scene = new BABYLON.Scene(this._engine);
+            
+            // Camera
+            this._camera = new BABYLON.FreeCamera("camera", new BABYLON.Vector3(29, 13, 23), this._scene);
+            this._camera.setTarget(new BABYLON.Vector3(0, 0, 0));
+            this._camera.attachControl(canvas);
+            
+            // Light
+            this._light = new BABYLON.PointLight("Point", new BABYLON.Vector3(-60, 60, 80), this._scene);
+            this._light.intensity = 1;
+
+            // Textures
+            var diffuseTexture = new BABYLON.Texture("assets/floor.png", this._scene);
+            diffuseTexture.vScale = diffuseTexture.uScale = 5.0;
+            
+            var boxTexture = new BABYLON.Texture("assets/wood.jpg", this._scene);
+            
+            // Materials
+            var planeMaterial = new BABYLON.StandardMaterial("plane_material", this._scene);
+            planeMaterial.diffuseTexture = diffuseTexture;
+            
+            var boxMaterial = new BABYLON.StandardMaterial("box_material", this._scene);
+            boxMaterial.diffuseTexture = boxTexture;
+            
+            // Meshes
+            this._plane = BABYLON.Mesh.CreateGround("ground", 100, 100, 2, this._scene);
+            this._plane.material = planeMaterial;
+            
+            this._box = BABYLON.Mesh.CreateBox("box", 5, this._scene);
+            this._box.refreshBoundingInfo();
+            this._box.position.y = 2.5;
+            this._box.material = boxMaterial;
+
+            this._engine.runRenderLoop(function () {
+                _this._scene.render();
+            });
+        }           
+
+  body
+    canvas#renderCanvas
+    
+     script(type='text/javascript').
+        window.addEventListener('DOMContentLoaded', function(){
+            var canvas = document.getElementById('renderCanvas');
+            createSample(canvas);
+        });
+    
+    
+      
+  
