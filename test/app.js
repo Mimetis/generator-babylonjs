@@ -5,9 +5,14 @@ var helpers = require('yeoman-generator').test;
 
 describe('generator-babylonjs:app', function () {
   before(function (done) {
-    helpers.run(path.join(__dirname, '../generators/app'))
-      .withOptions({someOption: true})
-      .withPrompts({someAnswer: true})
+    this.timeout(0);
+
+    var pathApp = path.join(__dirname, '../generators/app');
+
+
+    helpers.run(pathApp)
+      .withOptions({ playground: '#2FW07A#0' })
+      .withPrompts({ name: 'testapp', createFolder: true })
       .on('end', done);
   });
 
