@@ -59,7 +59,9 @@ app.use(function(err, req, res, next) {
   });
 });
 
-app.listen(process.env.PORT || 4000);
+<%- snippetPort %>
+
+app.listen(process.env.PORT || port);
 
 
 module.exports = app;

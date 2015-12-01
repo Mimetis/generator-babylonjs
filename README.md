@@ -16,6 +16,19 @@ Then generate your new project:
 yo babylonjs
 ```
 
+## Playground option : --playground [#identifier]
+
+If you found a cool scene from the playground, you can generate the full code with the playground scene identifier :
+
+A playground sample : [http://www.babylonjs-playground.com/#11OYNB#12](http://www.babylonjs-playground.com/#11OYNB#12)
+ 
+The command line to generate the full playground sample code :
+
+```bash
+yo babylonjs --playground #11OYNB#12
+```
+
+
 ## Getting To Know BabylonJS
 
 Getting started? Play directly with the Babylon.js API via our [playground](http://www.babylonjs.com/playground). It contains also lot of simple samples to learn how to use it. 

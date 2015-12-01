@@ -104,7 +104,7 @@ module.exports = yeoman.generators.Base.extend({
       this.fs.copyTpl(this.templatePath('_package.json'), this.destinationPath('package.json'), this.genConfig);
     }
 
-
+    this.genConfig.snippetPort = "var port = " + this.genConfig.port;
 
     var snippetCode = "var createScene = function () { \n \
             // Scene \n \
@@ -163,7 +163,18 @@ module.exports = yeoman.generators.Base.extend({
           response.on('end', function () {
             var result = JSON.parse(data.join(''))
 
-            _this.genConfig.snippetCode = result.code;
+            var code = result.code;
+            var replaceDoubleQuote = '"http://www.babylonjs-playground.com/textures/';
+            var replaceSingleQuote = '\'http://www.babylonjs-playground.com/textures/';
+            code = code.replace(/"textures\//gi, replaceDoubleQuote);
+            code = code.replace(/'textures\//gi, replaceSingleQuote);
+            replaceDoubleQuote = '"http://www.babylonjs-playground.com/scenes/';
+            replaceSingleQuote = '\'http://www.babylonjs-playground.com/scenes/';
+            code = code.replace(/"scenes\//gi, replaceDoubleQuote);
+            code = code.replace(/'scenes\//gi, replaceSingleQuote);
+            
+
+            _this.genConfig.snippetCode = code;
             _this.fs.copyTpl(_this.templatePath('public/scripts/index.js'), _this.destinationPath('public/scripts/index.js'), _this.genConfig);
 
             done();
@@ -199,7 +210,7 @@ module.exports = yeoman.generators.Base.extend({
     this.fs.copy(this.templatePath('routes/index.js'), this.destinationPath('routes/index.js'));
     this.fs.copy(this.templatePath('views/index.jade'), this.destinationPath('views/index.jade'));
     this.fs.copy(this.templatePath('views/error.jade'), this.destinationPath('views/error.jade'));
-    this.fs.copy(this.templatePath('app.js'), this.destinationPath('app.js'));
+    this.fs.copyTpl(this.templatePath('app.js'), this.destinationPath('app.js'), this.genConfig);
     this.fs.copy(this.templatePath('README.md'), this.destinationPath('README.md'));
   },
 
